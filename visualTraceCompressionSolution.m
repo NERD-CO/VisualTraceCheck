@@ -1,4 +1,6 @@
 % Matrix column number
+cd('D:\01_Coding_Datasets\VISUAL_TRACE_test\RAW_Ephys_Files\04_20_2017')
+%%
 
 matDir1 = dir('*.mat');
 matDir2 = {matDir1.name};
