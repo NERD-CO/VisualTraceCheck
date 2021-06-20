@@ -239,13 +239,16 @@ for si = 1:length(surgDir3)
                 for ai = 1:length(locs_Rwave)
                     locP = locs_Rwave(ai);
                     sampPeriod = round(locP - (sampLen/2):locP + (round(sampLen*0.8)-1));
-                    if any(sampPeriod > length(spkData)) || any(sign(sampPeriod) == -1)
-                        PwaveForms(:,ai) = [];
-                        break
-                    else
+                    
+                    shortCh = any(sign(sampPeriod) == -1);
+                    longch = any(sampPeriod > length(spkData));
+                    
+                    if ~(longch || shortCh)
                         PwaveForms(:,ai) = spkData(sampPeriod);
                     end
                 end
+                
+                PwaveFormsU = PwaveForms(:,PwaveForms(1,:) ~= 0);
                 
                 % Get rid of points to close to edge NEW 6/15/2016
                 vals2short = locs_NGwave < newFS*0.05;
@@ -255,15 +258,18 @@ for si = 1:length(surgDir3)
                 for ai = 1:length(locs_NGwave)
                     locP = locs_NGwave(ai);
                     sampPeriod = round(locP - (sampLen/2):locP + (round(sampLen*0.8)-1));
-                    if any(sampPeriod > length(spkData))
-                        NwaveForms(:,ai) = [];
-                        break
-                    else
+                    
+                    shortCh = any(sign(sampPeriod) == -1);
+                    longch = any(sampPeriod > length(spkData));
+                    
+                    if ~(longch || shortCh)
                         NwaveForms(:,ai) = (spkData(sampPeriod))*-1;
                     end
                 end
                 
-                waveForms{rowNUMS(eleII),thi} = [NwaveForms , PwaveForms];
+                NwaveFormsU = NwaveForms(:,NwaveForms(1,:) ~= 0);
+                
+                waveForms{rowNUMS(eleII),thi} = [NwaveFormsU , PwaveFormsU];
                 
                 disp(['Threshold ', num2str(thi), ' out of ', num2str(length(threshALL))])
             end

@@ -115,7 +115,7 @@ for si = 1:length(surgDir3)
     
     switch recFlag
         case 'mg'
-            uniqueVals = unique(cellfun(@(x) str2double(x(7)), cspkS, 'UniformOutput',true));
+            uniqueVals = unique(cellfun(@(x) str2double(x(11)), cspkS, 'UniformOutput',true));
         case 'no'
             uniqueVals = unique(cellfun(@(x) str2double(x(7)), cspkS, 'UniformOutput',true));
     end
@@ -146,7 +146,7 @@ for si = 1:length(surgDir3)
                 case 'mg'
                     tmpEf = eval([eleNAME,num2str(uniqueVals(ei))]);
                 case 'no'
-                    tmpEf = eval([eleNAME,'_0',num2str(uniqueVals(ei))]);
+                    tmpEf = eval([eleNAME,num2str(uniqueVals(ei))]);
             end
             tmpEfdn = downsample(tmpEf,4);
             
@@ -193,7 +193,7 @@ for si = 1:length(surgDir3)
         for eleII = 1:length(tmpEleNum)
             
             yDatAll = tmpRawDat(eleII,:);
-            thrYdat = yDatAll(~isnan(yDatAll));
+            thrYdat = yDatAll(~yDatAll == 0);
             
             threshALL = 3:6;
             for thi = 1:length(threshALL)
@@ -239,13 +239,12 @@ for si = 1:length(surgDir3)
                 for ai = 1:length(locs_Rwave)
                     locP = locs_Rwave(ai);
                     sampPeriod = round(locP - (sampLen/2):locP + (round(sampLen*0.8)-1));
-                    if any(sampPeriod > length(spkData)) || any(sign(sampPeriod) == -1)
-                        PwaveForms(:,ai) = [];
-                        break
-                    else
+                    if ~any(any(sampPeriod > length(spkData)) || any(sign(sampPeriod) == -1))
                         PwaveForms(:,ai) = spkData(sampPeriod);
                     end
                 end
+                
+%                 PwaveFormsU = PwaveForms(PwaveForms ~= 0)
                 
                 % Get rid of points to close to edge NEW 6/15/2016
                 vals2short = locs_NGwave < newFS*0.05;
@@ -255,10 +254,7 @@ for si = 1:length(surgDir3)
                 for ai = 1:length(locs_NGwave)
                     locP = locs_NGwave(ai);
                     sampPeriod = round(locP - (sampLen/2):locP + (round(sampLen*0.8)-1));
-                    if any(sampPeriod > length(spkData))
-                        NwaveForms(:,ai) = [];
-                        break
-                    else
+                    if ~any(any(sampPeriod > length(spkData)) || any(sign(sampPeriod) == -1))
                         NwaveForms(:,ai) = (spkData(sampPeriod))*-1;
                     end
                 end
