@@ -146,7 +146,7 @@ for si = 1:length(surgDir3)
                 case 'mg'
                     tmpEf = eval([eleNAME,num2str(uniqueVals(ei))]);
                 case 'no'
-                    tmpEf = eval([eleNAME,'_0',num2str(uniqueVals(ei))]);
+                    tmpEf = eval([eleNAME,num2str(uniqueVals(ei))]);
             end
             tmpEfdn = downsample(tmpEf,4);
             
@@ -193,7 +193,7 @@ for si = 1:length(surgDir3)
         for eleII = 1:length(tmpEleNum)
             
             yDatAll = tmpRawDat(eleII,:);
-            thrYdat = yDatAll(~isnan(yDatAll));
+            thrYdat = yDatAll(~yDatAll == 0);
             
             threshALL = 3:6;
             for thi = 1:length(threshALL)
