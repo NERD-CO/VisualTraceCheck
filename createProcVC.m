@@ -206,7 +206,7 @@ for si = 1:length(surgDir3)
                 tmpMean = mean(double(thrYdat));
                 threshInfo(rowNUMS(eleII),1,thi) = tmpMean;
                 % For plotting
-                yLIMstd = std(double(thrYdat)) * (threshALL(thi) + 4);
+                yLIMstd = std(double(thrYdat)) * 9;
                 
                 threshL = tmpMean + tmpThreshMp;
                 threshInfo(rowNUMS(eleII),2,thi) = threshL;
