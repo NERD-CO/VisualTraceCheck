@@ -126,7 +126,10 @@ for si = 1:length(surgDir3)
     
     % Combine and downsample
     % All data matrix
-    allDAT = nan(TotalVals*length(spkDim) , max(spkDim), 'single');
+    % Modify to cell array
+    allDAT = cell(TotalVals*length(spkDim) , 1);
+    
+%     allDAT = nan(TotalVals*length(spkDim) , max(spkDim), 'single');
     % Case ID
     caseID = cell(TotalVals*length(spkDim) , 1);
     % Electrode ID
@@ -140,6 +143,9 @@ for si = 1:length(surgDir3)
         activeFileName = mFnamesF{activeFileNum};
         
         load(activeFileName) %#ok<LOAD>
+        
+%         tmpColn = spkDim(ai);
+        
         for ei = 1:TotalVals
             
             switch recFlag
@@ -149,8 +155,8 @@ for si = 1:length(surgDir3)
                     tmpEf = eval([eleNAME,num2str(uniqueVals(ei))]);
             end
             tmpEfdn = downsample(tmpEf,4);
-            
-            allDAT(rowC , 1:length(tmpEfdn)) = int16(tmpEfdn);
+                      
+            allDAT{rowC} = int16(tmpEfdn);
             
             caseID{rowC} = mFnamesF{ai};
             elecID(rowC) = uniqueVals(ei);
@@ -174,7 +180,7 @@ for si = 1:length(surgDir3)
         
     end
     
-    allDAT16 = int16(allDAT);
+    allDAT16 = allDAT;
     
     % WAVEFORMS
     threshInfo = zeros(size(allDAT16,1),4,4);
@@ -192,7 +198,7 @@ for si = 1:length(surgDir3)
         
         for eleII = 1:length(tmpEleNum)
             
-            yDatAll = tmpRawDat(eleII,:);
+            yDatAll = tmpRawDat{eleII};
             thrYdat = yDatAll(~yDatAll == 0);
             
             threshALL = 3:6;
@@ -240,7 +246,7 @@ for si = 1:length(surgDir3)
                     locP = locs_Rwave(ai);
                     sampPeriod = round(locP - (sampLen/2):locP + (round(sampLen*0.8)-1));
                     
-                    shortCh = any(sign(sampPeriod) == -1);
+                    shortCh = any(sign(sampPeriod) <= 0);
                     longch = any(sampPeriod > length(spkData));
                     
                     if ~(longch || shortCh)
