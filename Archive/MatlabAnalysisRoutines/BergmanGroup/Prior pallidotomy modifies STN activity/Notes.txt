@@ -1,0 +1,22 @@
+This is the software pertaining to the study documented in the article: 
+"Prior pallidotomy reduces and modifies neuronal activity in the subthalamic nucleus of Parkinson’s disease patients"
+
+for any questions contact Adam Zaidel adam@alice.nc.huji.ac.il
+
+The software used consists of 2 parts
+1) Custom Matlab software (that available here)
+2) General Neuroshare Matlab API (information and download is available at: 
+http://neuroshare.sourceforge.net/Matlab-Import-Filter/NeuroshareMatlabAPI-2-2.htm)
+
+The custom software consists of 7 files:
+1) initialize.m
+2) initialize_post.m
+3) Calc_SD.m
+4) sd_sort_plot.m
+5) post_print.m
+6) plotAllPSD.m
+7) post_print_spectrum.m
+
+Note: Some nomenclature was changed (since programming) for the article, i.e.:
+1) SD (standard deviation) used in the software was changed to RMS (Root Mean Square) in the article.
+(These terms are interchangeable since the mean is zero)

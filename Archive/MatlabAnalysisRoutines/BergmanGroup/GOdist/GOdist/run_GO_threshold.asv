@@ -1,0 +1,40 @@
+function run_GO_threshold;
+
+% Computation as a function of threshold
+% Still no second category
+ontology = 'mf';
+datadir = 'D:\usr\lilach\work\Yoram\input\affymetrix_Math1#2\GodistInput\withoutcontrols';
+infile = 'D:\usr\lilach\work\Yoram\input\affymetrix_Math1#2\GodistInput\withoutcontrols\Math1#2_selected_data.mat';
+expname = 'Math1#2';
+CH_Thresh = [1:0.1:2]
+
+percent_detected = zeros(length(CH_Thresh),2);
+%P_vals = zeros(length(CH_Thresh),2);
+for i = 1:length(CH_Thresh)
+         disp(i);
+         %1*2 vector
+         [percent_detected_for_thresh] = GOdist_run_both_methods_for_thresh(datadir,expname,infile,ontology,CH_Thresh(i));
+% Same as test_GO_dist but only the number of the term is reported. Also,
+       
+        %bD1(i)=  length(find(P1 <= 0.05));
+        %bD2(i) = length(find(P2 <= 0.05));
+       percent_detected(i,:)=percent_detected_for_thresh;
+        %p_vals(i,2) =P1;
+        
+end
+
+
+%now plot
+figure
+plot(CH_Thresh,percent_detected(:,1),'b');
+hold on
+plot(CH_Thresh,percent_detected(:,2),'r');
+set(gca,'xtick',CH_Thresh);
+set(gca,'ylim',[0 2]);
+set(gca,'ytick',[0:0.1:2]);
+set(gca,'xticklabel',num2str(CH_Thresh'));
+title('Percentage as a function of change criterion')
+ylabel('% detected')
+xlabel('Change Threshold')
+legend('Continuous','Discrete')
+title('Detection as a function of threshold')

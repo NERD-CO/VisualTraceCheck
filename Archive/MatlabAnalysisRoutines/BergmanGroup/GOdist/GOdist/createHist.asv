@@ -1,0 +1,34 @@
+function  [] = GOdist_create_histt(data_dir,expname,term,ontology,Y_indicator);
+
+[params paramnames]=create_parameters(data_dir,expname);
+log_ratios= get_all_genes_with_term(data_dir,expname,params,paramnames,term,ontology);
+
+delta =100; 
+size = length(log_ratios);
+
+[Na,Xa]=hist(log_ratios,delta);
+size = length(log_ratios);
+one_per = size/100;
+
+if (Y_indicator=='percent') 
+    Na = 100*Na/size; 
+    y_name = 'percent of transcripts';
+else 
+    Na=Na/delta;
+    y_name = 'N';
+end
+figure;
+S1 = bar(Xa,Na);
+set(S1,'color','b');
+
+xlabel('log2 fold ratio');
+ylabel(y_name);
+title('effect of KO');
+
+terms_fname = [datadir filesep 'GO_bp_terms.mat'];
+load(terms_fname); % A file of all terms and names
+term_index = find(ALL_TERMS==term);
+term_name = ALL_NAMES{term_index};
+
+legend(term+'-'+term_name);
+

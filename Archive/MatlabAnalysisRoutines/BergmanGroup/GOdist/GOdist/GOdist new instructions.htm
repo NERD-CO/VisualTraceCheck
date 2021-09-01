@@ -1,0 +1,672 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1255">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>Stage 1 - Prepare the data files</title>
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:right;
+	direction:rtl;
+	unicode-bidi:embed;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:2.0cm 89.85pt 42.55pt 89.85pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+<div class=Section1>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Analysis
+of Affymetrix®    microarrays data using GOdist software</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u><span
+ style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:14.15pt;direction:ltr;
+unicode-bidi:embed'>GOdist is a MATLAB® program that analyzes distributions of
+transcript values associated with specific gene ontology terms. GOdist is an
+implementation of the “continuous” approach for analysis of GO term expression
+patterns. Thus, rather than testing the number of “changed” transcripts
+associated with each category, GOdist considers all transcripts within the
+category, and compares their <i>distributions</i> to those of either the entire
+set of measured transcripts, or to those of their parent terms in the ontology.
+From a biological point of view, the continuous approach allows detection of
+changes in categories which are not characterized by a larger than expected
+number of changed genes, but reflect any changes whatsoever in the form of
+their distributions.  </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:14.15pt;direction:ltr;
+unicode-bidi:embed'>GOdist also performs calculations based on the “discrete”
+approach. GOdist was designed to work with data from Affymetrix®    microarrays
+and Gene Ontology Consortium (GOC) ontologies. You can go to  <a
+href="http://www.geneontology.org/">http://www.geneontology.org/</a> web site to
+read more about the ontologies.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:14.15pt;direction:ltr;
+unicode-bidi:embed'>The essential output of GOdist is a list of gene ontology
+terms, and results from a non-parametric statistical test between the
+distributions of values (e.g. expression levels) of all transcripts associated
+with these terms, compared to the distribution of all transcripts measured in
+the experiment. Results of this analysis are saved in excel files. In addition,
+GOdist can accept as input specific GO terms, and compare the distribution of
+transcripts associated with them, to their parent term(s). When a specific GO
+term is analyzed, a more rigorous analysis is conducted, employing also a
+non-parametric ANOVA, a test of variance, and a graphic representation of the
+distribution under comparison. Also, GOdist can get the list of probes, and
+their matching UniGene codes and expression levels associated with a specific
+GO term and draw a graphic representation of the number of transcripts which
+are associated with each expression level in a specific term.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u><span
+style='font-size:14.0pt'>Detailed instructions:</span></u></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Prepare
+the data files:</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:left;direction:ltr;unicode-bidi:embed'>       GOdist
+uses a variety of input files, taken from different sources.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:left;direction:ltr;unicode-bidi:embed'><img
+width=461 height=283 src="GOdist%20new%20instructions_files/image001.gif"
+align=left hspace=12>We use data extracted from Affymetrix®   microarray experiment,
+data from Affymetrix®     web site  and ontologies data from GOC site.</p>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman"'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:21.8pt;direction:ltr;
+unicode-bidi:embed'>First, create a new folder which will eventually include
+all the input files (&quot;<b>main directory</b>&quot;).  Choose a short <b>experiment
+name</b> which we will use later for input files name convention. Now we can
+prepare the input files.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:21.8pt;direction:ltr;
+unicode-bidi:embed'><b><u>Files from Affymetrix®     results file:</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;text-indent:21.8pt;direction:ltr;
+unicode-bidi:embed'>The microarray data file includes information about the
+specific inputs added to the Affymetrix®     expression data file (*pivot*.xls).
+The following additional columns will be created: for each treatment rehearsals,
+take the result columns and compute the mean, standard deviation and
+coefficient variation column using excel functions. Than, compute the <b>data</b>
+column by taking log2 of expression ratio (that is, mean null/mean WT columns).
+Optionally, compute a <b>scores</b> column. The scores will indicate which
+transcript to select when several contain the same UniGene code.  The score can
+be, for example, the variability across multiple treatments.  Sort the file
+according to (ascending) Probe Set ID Save <b>data</b> and <b>scores</b>
+columns each in a separate excel (.xls) file. The name of each file should
+start with the experiment name prefix, underscore (&quot;_&quot;) and than &quot;data&quot;
+or &quot;scores&quot;, respectively (<i>experiment</i>_data.xls,<i>experiment</i>
+_scores.xls). Save the mean column of the treatment (Mean Null) column in a
+file called <i>experiment</i>_mean_treatment.xls and the mean of WT column in a
+file called <i>experiment</i>_WT.xls</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;direction:ltr;unicode-bidi:embed'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=20 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=412 height=234
+  src="GOdist%20new%20instructions_files/image002.gif"></td>
+ </tr>
+</table>
+
+<br clear=ALL>
+Affymetrix®     expression data (*pivot*.xls) file example: <span
+style='position:absolute;z-index:1;left:0px;margin-left:422px;margin-top:256px;
+width:174px;height:256px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=174 height=256 bgcolor=white style='vertical-align:top;background:
+  white'><span style='position:absolute;left:0pt;z-index:1'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div style='padding:3.6pt 7.2pt 3.6pt 7.2pt'>
+    <p class=MsoNormal style='text-align:left;direction:ltr;unicode-bidi:embed'>Data
+    and Scores columns:</p>
+    <p class=MsoNormal style='text-align:left;direction:ltr;unicode-bidi:embed'><img
+    width=138 height=207 src="GOdist%20new%20instructions_files/image003.gif"></p>
+    </div>
+    </td>
+   </tr>
+  </table>
+  </span>&nbsp;</td>
+ </tr>
+</table>
+
+</span></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:14.2pt;text-align:justify;direction:ltr;unicode-bidi:embed'>Additional
+columns were created (Mean, STD and CV):</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>
+
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=22 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=406 height=202
+  src="GOdist%20new%20instructions_files/image004.gif"></td>
+ </tr>
+</table>
+
+<br clear=ALL>
+</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u><span
+ style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Files
+prepared from Affymetrix®   annotation file (labeled purple), </u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>These
+files specify the associations between transcripts and ontologies: </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Now, prepare
+the following 5 data file from Affymetrix®   annotation file which corresponds
+to the specific array used (e.g. Mouse430A_2_annot.csv) found in Affymetrix®    web
+site <a href="http://www.affymetrix.com/">http://www.Affymetrix®    .com/</a> .
+First, sort it according to Probe Set ID (ascending). Than, each relevant data
+column,<b> without its column header</b>, is used to create a text file. </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>The names
+of text files start with the experiment name and &quot;_&quot;. Than, ID/UG/annot_bp/annot_mf/annot_cc,
+respectively. </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>In the
+following examples, the column header is given for clarity only. the column
+data should be copied to the .txt file without it.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><span
+style='position:absolute;z-index:19;left:0px;margin-left:101px;margin-top:55px;
+width:23px;height:14px'><img width=23 height=14
+src="GOdist%20new%20instructions_files/image005.gif"></span><span
+style='position:absolute;z-index:18;left:0px;margin-left:399px;margin-top:217px;
+width:37px;height:13px'><img width=37 height=13
+src="GOdist%20new%20instructions_files/image006.gif"></span><span
+style='position:absolute;z-index:16;left:0px;margin-left:120px;margin-top:21px;
+width:230px;height:76px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=230 height=76 bgcolor=white style='border:.75pt solid black;
+  vertical-align:top;background:white'><span style='position:absolute;
+  left:0pt;z-index:16'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div style='padding:4.35pt 7.95pt 4.35pt 7.95pt'>
+    <p class=MsoNormal style='text-align:left;direction:ltr;unicode-bidi:embed'>Probe
+    Set ID column example (with which <i>experiment</i> _ID.txt file is
+    created).</p>
+    </div>
+    </td>
+   </tr>
+  </table>
+  </span>&nbsp;</td>
+ </tr>
+</table>
+
+</span><span style='position:absolute;z-index:17;left:0px;margin-left:177px;
+margin-top:185px;width:230px;height:83px'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=230 height=83 bgcolor=white style='border:.75pt solid black;
+  vertical-align:top;background:white'><span style='position:absolute;
+  left:0pt;z-index:17'>
+  <table cellpadding=0 cellspacing=0 width="100%">
+   <tr>
+    <td>
+    <div style='padding:4.35pt 7.95pt 4.35pt 7.95pt'>
+    <p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+    3.0pt;margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>UniGene
+    ID column example (with which <i>experiment</i> _UG.txt file is created)</p>
+    <p class=MsoNormal dir=RTL><span dir=LTR>&nbsp;</span></p>
+    </div>
+    </td>
+   </tr>
+  </table>
+  </span>&nbsp;</td>
+ </tr>
+</table>
+
+</span><img border=0 width=101 height=254
+src="GOdist%20new%20instructions_files/image007.gif">                                                                                   <img
+border=0 width=90 height=264
+src="GOdist%20new%20instructions_files/image008.gif"></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>Gene Ontology
+Biological Process column example (used to create experiment_annot_bp file):</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><img
+border=0 width=574 height=173
+src="GOdist%20new%20instructions_files/image009.gif"></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>Gene Ontology
+Molecular Function column example (used to create experiment_annot_mf file):</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><img
+border=0 width=572 height=171
+src="GOdist%20new%20instructions_files/image010.gif"></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>Gene Ontology
+Cellular Component column example (used to create experiment_annot_cc file):</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><img
+border=0 width=574 height=143
+src="GOdist%20new%20instructions_files/image011.gif"></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=601 height=47 src="GOdist%20new%20instructions_files/image012.gif"
+align=left hspace=12><b>Files downloaded from GOC site, include information
+about the ontologies:</b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>Download the
+following 3 files, containing information about the ontologies and updated
+daily, from Gene Ontology Consortium (GOC) (<a
+href="http://www.geneontology.org/">http://www.geneontology.org/</a>) web site:</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><span
+style='font-size:11.0pt;font-family:Arial;color:black'><a
+href="http://www.geneontology.org/ontology/function.ontology"><strong><span
+style='font-family:Arial'>Molecular Function</span></strong> text file</a>: </span><a
+href="http://www.geneontology.org/ontology/function.ontology">http://www.geneontology.org/ontology/function.ontology</a></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><span
+style='font-size:11.0pt;font-family:Arial;color:black'><a
+href="http://www.geneontology.org/ontology/process.ontology"><strong><span
+style='font-family:Arial'>Biological Process</span></strong> text file</a>: </span></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><a
+href="http://www.geneontology.org/ontology/process.ontology">http://www.geneontology.org/ontology/process.ontology</a></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><span
+style='font-size:11.0pt;font-family:Arial;color:black'><a
+href="http://www.geneontology.org/ontology/component.ontology"><strong><span
+style='font-family:Arial'>Cellular Component</span></strong> text file</a>: </span></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><a
+href="http://www.geneontology.org/ontology/component.ontology">http://www.geneontology.org/ontology/component.ontology</a></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'>DON’T PANIC,
+all data files are prepared for you in advance.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Now when
+all data files are prepared, GOdist is ready to run.</p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>Open Matlab.</li>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>Browse GOdist program folder as <b>current directory</b>.</li>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>Type &quot;GOdist&quot;.</li>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>GOdist interface appears. If it does not appear, go to <b>file</b><b><span
+     style='font-size:14.0pt;font-family:Arial'>&#8594;</span>set path</b>, add
+     GOdist software folder (not the input files folder, only GOdist program
+     files) to the path and click '<b>save</b>'.<b> </b> </li>
+</ol>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Obtaining the
+results involves 4 stages. Note that each of these stages can only be performed
+after the previous one is completed.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Stage
+1: Data preparation:</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=327 height=145 src="GOdist%20new%20instructions_files/image013.gif"
+align=left hspace=12><b>Browse</b> the main directory (the directory with all
+input files prepared in the previous stage).</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Type your
+selected <b>experiment name</b> (which was used as the input files prefix) in
+the Experiment Name text box and press '<b>Prepare Data'</b> button.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Stage
+2: Choose a transcript selection rule:</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;text-indent:36.0pt;direction:ltr;unicode-bidi:
+embed'><img width=327 height=162
+src="GOdist%20new%20instructions_files/image014.gif" align=left hspace=12>It is
+often the case with Affymterix arrays that several oligonucleotides correspond
+to the same UniGene cluster. Thus, it does not make sense to consider all oligonucleotide
+probes for further analysis; but which oligonucleotides should be used? GOdist
+allows several selection criteria. You can choose transcripts according to
+their data: Median, Mean, Maximal absolute value, or minimal absolute value
+(for all transcripts with a given UniGene). Alternatively, and if you created scores
+file, you can choose the rule according to score (highest/lowest) instead
+according to the data.  After specifying the selection method, click the '<b>Apply</b>'
+button to generate the list of transcripts which will be used for further
+analysis.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Stage
+3: Select ontology to analyze:  </u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=327 height=74 src="GOdist%20new%20instructions_files/image015.gif"
+align=left hspace=12>Choose <b>Function</b> for molecular function categories, <b>Process
+</b>for biological process categories or <b>Component</b> for cellular
+component categories.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b><u>Stage
+4: Analyze the data:</u></b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u>Specify
+change criteria (for the discrete approach) and analyze all terms:</u></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u><span
+ style='text-decoration:none'>&nbsp;</span></u></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'><img width=327 height=128
+     src="GOdist%20new%20instructions_files/image016.gif" align=left hspace=12>Select
+     threshold method (fixed/fraction changed).  The threshold is used by the
+     discrete approach to test for overrepresentation of changed genes in each
+     category (it is irrelevant for the continuous approach). Two types of
+     threshold can be set: <b>fixed</b> (absolute) values, above which a
+     transcript is considered as changed, or <b>fraction changed</b>, in which
+     a certain percentage in the upper tail and lower tail of the distribution
+     are considered as changed. If fixed threshold was chosen, enter a number within
+     data (expression log ratios) column range (or leave 1, which corresponds
+     to 2-fold change, as the default). Otherwise, enter the percentage
+     (between 0-100) in the Fraction text box (or leave the default as 5%). </li>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>Select P-value: each of the two statistic tests employed on the
+     data reports a P-value for each tail, for any given category of the
+     selected ontology. We wish to view only the categories with a specified
+     P-value. For example, to view only categories including statistically
+     significant differences with P-value lower than 0.05, enter the P-value 0.05
+     in the Range box. The default P-value (1) will show all the ontology categories
+     in the results file.</li>
+ <li class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:
+     3.0pt;margin-left:36.0pt;text-align:justify;direction:ltr;unicode-bidi:
+     embed'>Press <b>Analyze.</b></li>
+</ol>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>When the
+&quot;<b>Done!</b>&quot; message box appears, it indicates that the result file
+was loaded into the main data directory (as specified in stage 1). The name of
+the excel output file will be either: <i>experiment</i>_MF_GO_analysis.xls, <i>experiment</i>_BP_GO_analysis.xls,
+or <i>experiment</i>_CC_GO_analysis.xls, depending on the ontology selected in
+stage 3. Just a small reminder: MF stands for Molecular Function, BP stands for
+Biological Process and CC stands for Cellular Component.  </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>An example
+of a result file for all terms analysis:</p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><img width=435
+height=452 src="GOdist%20new%20instructions_files/image017.jpg" align=left
+hspace=12><span dir=LTR>Each row describes one GO term (for which there was at
+least one transcript in the dataset). The columns contain the following
+information:</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>1. Name
+of GO term.</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>2. GO ID
+of term.</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>3.
+P-value for the one tailed Kolmogorov-Smirnov test, testing the hypothesis that
+the tested distribution contains <b>larger values</b> than the global
+distribution.</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>4.
+P-value for the Fisher Exact test employing the hypergeometric distribution
+(i.e. the Discrete method), testing the hypothesis that the tested distribution
+contains a larger than expected number of <b>increased</b> genes (as defined in
+stage 3).</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>5.
+P-value for the one tailed Kolmogorov-Smirnov test, testing the hypothesis that
+the tested distribution contains <b>smaller values</b> than the global
+distribution.</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>6.
+P-value for the Fisher Exact test employing the hypergeometric distribution
+(i.e. the Discrete method), testing the hypothesis that the tested distribution
+contains a larger than expected number of <b>decreased</b> genes (as defined in
+stage 3).</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>7.
+Number of transcripts associated with the GO term (after selection as in stage
+2).</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>8. A
+number indicating the reliability of the KS test. The p-value is most reliable
+when this value is larger than 4.</span></p>
+
+<p class=MsoNormal align=right dir=RTL style='margin-top:7.2pt;margin-right:
+0cm;margin-bottom:3.0pt;margin-left:0cm;text-align:left'><span dir=LTR>The red
+and blue cells in the figure above were created manually using the “conditional
+formatting” option of excel, with value &lt;=0.05 criteria (alternatively,
+choose P-value as 0.05 to get only the colored rows in the results file).</span></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u><span
+ style='text-decoration:none'>&nbsp;</span></u></p>
+
+<u><span style='font-size:12.0pt;font-family:"Times New Roman"'><br clear=all
+style='page-break-before:always'>
+</span></u>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u>Analyze
+specific term:</u></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><u><span
+ style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>In order
+to take a closer look at specific terms, go to <b>Analyze specific term</b>
+panel. </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=327 height=82 src="GOdist%20new%20instructions_files/image018.gif"
+align=left hspace=12></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>First,
+select the ontology of the term to be analyzed. </p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Than,
+enter the term number in GO ID box.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=327 height=152 src="GOdist%20new%20instructions_files/image019.gif"
+align=left hspace=12>1.  To generate cumulative density function (CDF) plots of
+the selected distribution compared to the global distribution and to the term’s
+parent, click &quot;<b>View CDF </b><b><span style='font-size:14.0pt;
+font-family:Arial'>&#8594;</span></b><b><span style='font-family:Arial'> </span>show</b>&quot;.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=378 height=329 src="GOdist%20new%20instructions_files/image020.jpg"
+align=left hspace=12>An example of CDF plot (Changed genes, according to the
+specified criteria, are shown as vertical lines):</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>Statistic
+parameters meaning explanation: high or low KS statistic, together with low KW
+test P-value (&lt;0.05/&lt;0.001) indicates whether the two distributions
+differ in their locations. The variance test shows whether the variance of the selected
+category (<i>phosphorus metabolism) </i>is larger than that of the global
+distribution (P &lt; 0.001), suggesting that this category is subject to more
+tightly constrained regulation than the entire set of transcripts.  </p>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman"'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>2. To
+generate a histogram of the number of transcripts associated with each
+expression ratio of a specific GO term, choose the log ratio (2/10) for expression
+ratios calculation, and press '<b>Show</b>'.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><img
+width=327 height=152 src="GOdist%20new%20instructions_files/image019.gif"
+align=left hspace=12>An example of a histogram plot:</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><span
+style='position:relative;z-index:14;left:-20px;top:0px;width:401px;height:300px'><img
+width=401 height=300 src="GOdist%20new%20instructions_files/image021.jpg"></span><br
+clear=ALL>
+</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:left;direction:ltr;unicode-bidi:embed'><img
+width=327 height=76 src="GOdist%20new%20instructions_files/image022.gif"
+align=left hspace=12>3.  To generate a file with the list of genes a specific
+term contains, enter term ID and press <b>'Make file'. </b>The output file will
+be downloaded to the input files directory, called &quot;ontology_termName_genes_list.xls&quot;.</p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-top:7.2pt;margin-right:0cm;margin-bottom:3.0pt;
+margin-left:0cm;text-align:justify;direction:ltr;unicode-bidi:embed'>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
